@@ -51,8 +51,8 @@ The dashboard is structured into three synchronized panels reflecting the full p
 crude-arbitrage-demurrage-monitor/
 ├── README.md                     # Desk analytics documentation
 ├── requirements.txt              # Pinned environment dependencies
-├── crude_arbitrage_monitor.py    # Quantification engine & Bloomberg UI renderer
-└── bloomberg_crude_monitor.png   # High-resolution 3-panel monitor dashboard
+├── crude.py    # Quantification engine & Bloomberg UI renderer
+└── Crude.png   # High-resolution 3-panel monitor dashboard
 
 ```
 
