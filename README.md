@@ -1,6 +1,6 @@
 # Physical Crude Arbitrage & Maritime Demurrage Sensitivity Monitor
 
-![Bloomberg Physical Desk Monitor](bloomberg_crude_monitor.png)
+![Bloomberg Physical Desk Monitor](Crude.png)
 
 A desk-grade quantitative analytics framework for monitoring physical crude arbitrage economics and maritime demurrage sensitivity on the Baltic TD3C route. The monitor is designed to quantify how discharge bottlenecks, prompt market decay, and freight timing distort delivered CIF parity for Middle East crude flowing into China.
 
