@@ -76,7 +76,7 @@ cd crude-arbitrage-demurrage-monitor
 pip install -r requirements.txt
 
 # 3. Run the desk engine and regenerate the Bloomberg monitor
-python crude_arbitrage_monitor.py
+python crude.py
 
 ```
 
