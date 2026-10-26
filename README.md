@@ -86,7 +86,8 @@ Under a 21-day sea transit and a severe 30-day discharge bottleneck (51 total tr
 
 Destination refining netback must offer at least **+$4.62 /bbl** premium over FOB origin pricing (+$2.43 base logistics + $0.78 demurrage + $1.41 finance, loss & survey) to achieve economic breakeven under fully hedged Quotation Periods (QP).
 
-*Unhedged Basis Risk Note*: If prompt-month paper swaps (Brent/Dubai EFS) are not executed to lock the delivery pricing window, an additional +$4.52 /bbl term structure decay is inflicted by the severe backwardation curve, rendering unhedged physical arbitrage structurally underwater.
+Unhedged Basis Risk Note: If prompt-month paper swaps (Brent/Dubai EFS) are not executed to lock the delivery pricing window, an additional +$4.52 /bbl term structure decay is inflicted by the severe backwardation curve, rendering unhedged physical arbitrage structurally underwater.
+
 ---
 
 ## 5. Project Structure & Quickstart
