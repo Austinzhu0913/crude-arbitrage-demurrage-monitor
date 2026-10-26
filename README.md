@@ -20,9 +20,9 @@ The model utilizes historical settlement data and charterparty conventions as fi
 | Shipping Route | Baltic Dirty Tanker TD3C | MEG to China | 270,000 MT | Parcel Size | Standard VLCC fixture benchmark (~2.0M bbls) |
 | Demurrage Rate | Model Input Parameter | Baltic Assessment Proxy | \$57,699 | USD / day | Calibrated charterparty proxy (Oct 25, 2026 snapshot)[cite: 11] |
 | Contractual Laytime | Allowed Loading/Discharge | Standard SHINC Terms | 72.0 | Hours (3 days) | Free laytime post-NOR before demurrage starts |
-| Crude Prompt Price | ICE Brent Futures (M1) | `COZ6 Comdty` | \$116.72 | USD / bbl | ICE Brent Dec 2026 settlement snapshot (`PX_LAST`)[cite: 13, 14] |
-| Prompt Roll Spread | ICE Brent M1-M2 Spread | `COZ6 - COF7` | +\$5.02 | USD / bbl | Front-month backwardation premium snapshot[cite: 13] |
-| 12-Month Curve Spread | ICE Brent M1-M12 Spread | `COZ6 - COX7` | +\$28.87 | USD / bbl | Full forward curve backwardation spread snapshot[cite: 13, 14] |
+| Crude Prompt Price | ICE Brent Futures (M1) | `COZ6 Comdty` | \$116.72 | USD / bbl | ICE Brent Dec 2026 settlement snapshot (`PX_LAST`)|
+| Prompt Roll Spread | ICE Brent M1-M2 Spread | `COZ6 - COF7` | +\$5.02 | USD / bbl | Front-month backwardation premium snapshot |
+| 12-Month Curve Spread | ICE Brent M1-M12 Spread | `COZ6 - COX7` | +\$28.87 | USD / bbl | Full forward curve backwardation spread snapshot|
 | Dubai Cash Roll | Dubai 1M vs 2M Spread | `DBL1 - DBL2` | -\$4.056 | USD / bbl | Cash market contango snapshot (Oct 23, 2026)[cite: 10] |
 
 *Methodological & Traceability Note*: 
