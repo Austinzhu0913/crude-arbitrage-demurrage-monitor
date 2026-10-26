@@ -83,7 +83,6 @@ crude-arbitrage-demurrage-monitor/
 ├── crude.py         # Analytics engine, unit tests & visualizer
 └── Crude.png        # High-resolution 3-panel monitor dashboard
 ```
-
 Installation & Execution
 ```
 # 1. Clone the repository
