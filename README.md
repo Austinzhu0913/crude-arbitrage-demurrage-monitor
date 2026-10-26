@@ -1,92 +1,77 @@
-# Physical Crude Arbitrage & Maritime Demurrage Sensitivity Monitor
+# Physical Crude Delivered Economics & Demurrage Sensitivity Prototype
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-A desk-grade quantitative analytics framework for monitoring physical crude delivered CIF parity, maritime demurrage exposure, and forward curve roll risk on the Baltic TD3C route. 
+An independent quantitative research prototype analyzing landed CIF delivered parity, maritime demurrage sensitivity, and term structure roll exposures for Middle East crude flowing into China (Baltic TD3C route). 
 
-The monitor evaluates how discharge bottlenecks, financing carry, and prompt market structure distort delivered CIF economics for Middle East crude flowing into China.
+The model evaluates how discharge bottlenecks, carry financing, and forward market structure distort delivered costs relative to theoretical headline spreads.
 
-![Bloomberg Physical Desk Monitor](Crude.png)
+![Physical Desk Monitor](Crude.png)
 
 ---
 
-## 1. Market Benchmarks & Bloomberg Terminal Metadata
+## 1. Baseline Assumptions & Benchmark Metadata
 
-All baseline parameters reflect official **Bloomberg Terminal** queries and **Baltic Exchange** fixtures:
+The model utilizes historical settlement data and charterparty conventions as fixed simulation parameters. Figures are grounded in terminal settlement snapshots and industry guidelines:
 
-| Parameter Category | Commercial Benchmark | Contract Ticker / Field | Settled Value | Quote Unit | Bloomberg Convention |
+| Parameter Category | Industry Benchmark | Contract / Field | Baseline Value | Units | Source & Nature of Data |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Shipping Route** | Baltic Dirty TD3C (MEG-China) | `TD3C Assessment` | 270,000 MT | VLCC Parcel | Baltic Fixture Standard |
-| **Daily Demurrage** | Baltic VLCC Demurrage Rate | `TD3C Demurrage` | \$57,699 / day | USD / day | Contractual charterparty rate[cite: 7] |
-| **Contractual Laytime** | Allowed Loading/Discharging | Standard SHINC | 72 running hours | 3.0 Days | Free time before demurrage |
-| **Crude Prompt Benchmark** | ICE Brent Generic (M1) | `COZ6 Comdty` | \$116.72 / bbl | USD / bbl | `PX_LAST` (Dec 26 Delivery)[cite: 9, 10] |
-| **Prompt Roll Spread** | ICE Brent M1-M2 Spread | `COZ6 - COF7` | -\$5.02 / bbl | USD / bbl | Steep prompt backwardation[cite: 9] |
-| **Forward Curve Structure**| ICE Brent M1-M12 Spread | `COZ6 - COX7` | -\$28.87 / bbl | USD / bbl | Annual curve backwardation[cite: 9, 10] |
-| **Dubai Cash Roll** | Dubai 1M vs 2M Spread | `DBL1 - DBL2` | -\$4.056 / bbl | USD / bbl | Terminal prompt spread[cite: 6] |
+| **Shipping Route** | Baltic Dirty Tanker TD3C | MEG to China | 270,000 MT | Parcel Size | Standard VLCC cargo (~2.0M bbls) |
+| **Demurrage Rate** | Baltic VLCC Assessment | TD3C Daily Assessment | \$57,699 | USD / day | Static historical charterparty rate[cite: 7] |
+| **Contractual Laytime**| Allowed Loading/Discharge | Standard SHINC Terms | 72.0 | Hours (3 days)| Free time before demurrage begins |
+| **Crude Prompt Price** | ICE Brent Futures (M1) | `COZ6 Comdty` | \$116.72 | USD / bbl | Settlement snapshot (Dec 26 delivery)[cite: 9] |
+| **Prompt Roll Spread** | ICE Brent M1-M2 Spread | `COZ6 - COF7` | -\$5.02 | USD / bbl | Backwardation snapshot[cite: 9] |
+| **12-Month Curve** | ICE Brent M1-M12 Spread | `COZ6 - COX7` | -\$28.87 | USD / bbl | Full forward curve structure[cite: 9] |
+| **Dubai Cash Roll** | Dubai 1M vs 2M Spread | `DBL1 - DBL2` | -\$4.056 | USD / bbl | Cash market spread snapshot[cite: 6] |
 
-### Unit Conversion & Demurrage Mathematics
-Demurrage accumulates strictly **after contractual laytime (72 hours)** is exhausted. The marginal cost per barrel is derived as:
-$$\text{Demurrage Drag (\$/bbl/day)} = \frac{\text{Daily Demurrage Rate}}{\text{Parcel Volume}} = \frac{\$57,699}{2,000,000\text{ bbls}} \approx \$0.02885\text{ /bbl/day}$$
-
-* **30-Day Port Congestion Impact**: $27 \text{ billable days} \times \$0.02885 \approx +\$0.779\text{ /bbl}$.
+*Note on Data Ingestion*: This repository is an offline simulation prototype. Input variables are statically calibrated from representative terminal snapshots rather than a live, automated Bloomberg API feed.
 
 ---
 
-## 2. Desk Analytics Architecture
+## 2. Mathematical Framework & Demurrage Mechanics
 
-The dashboard is structured into three synchronized panels reflecting the full physical-to-financial risk transmission:
+### Per-Barrel Demurrage Conversion
+Demurrage triggers strictly after the allowed laytime ($72\text{ hours} = 3.0\text{ days}$) is exceeded:
+$$\text{Marginal Demurrage (\$/bbl/day)} = \frac{\text{Daily Demurrage Rate}}{\text{Parcel Volume}} = \frac{\$57,699}{2,000,000\text{ bbls}} \approx \$0.02885\text{ /bbl/day}$$
 
-* **Panel 1: Physical Bottleneck & Demurrage Drag**: Tracks step-wise demurrage escalation across discrete port delay scenarios ($0\text{d}, 3\text{d}, 7\text{d}, 14\text{d}, 21\text{d}, 30\text{d}$).
-* **Panel 2: Delivered CIF Cost Escalation**: Models delivered CIF cost inflation for Chinese coastal refiners, comparing **Hedged Quotation Periods (QP)** against **Unhedged Backwardation Exposure**.
-* **Panel 3: ICE Brent Forward Curve Structure**: Visualizes the prompt-to-deferred discount across the 12-month forward curve ($-\$28.87\text{ /bbl}$ aggregate drop; prompt M1-M2 spread: $-\$5.02\text{ /bbl}$)[cite: 9, 10].
-
----
-
-## 3. Physical Arbitrage Execution vs. Theoretical Spread
-
-### Why "Paper Arbitrage" $\neq$ Executable Trading Margin
-A common misconception in commodity quantitative modeling is assuming that a simple delivered differential guarantees executable arbitrage. A physical crude trading desk evaluates arbitrage viability via a complete netback balance:
-
-$$\text{Arb Netback} = P_{\text{DES/CIF Destination}} - \left[ P_{\text{FOB Origin}} + \text{Flat Freight (WS)} + \text{Demurrage} + \text{Financing} + \text{Loss} + \text{Port/Canal Dues} \right]$$
-
-### Key Institutional Realities:
-1. **Pricing Windows (Quotation Periods, QP) & Hedging**:
-   - Physical sales contracts rarely price on a single spot date; pricing typically averages Platts assessments across a 5-day window around bill of lading (B/L) or vessel arrival.
-   - **Hedging Requirement**: Physical desks hedge floating flat price and roll risk using derivative swaps (e.g., Brent/Dubai EFS or prompt month swaps). Therefore, a 30-day delay does not automatically inflict a linear $\$0.167\text{/bbl/day}$ market erosion unless the position is left entirely unhedged across delivery months.
-2. **Official Selling Price (OSP) Differentials**:
-   - Middle Eastern grades (e.g., Arab Light, Upper Zakum) trade on monthly OSPs set by National Oil Companies (Aramco, ADNOC) as differentials to the Oman/Dubai benchmark, requiring basis risk adjustments.
-3. **Floating Storage Arbitrage Criteria**:
-   - Storing crude on a VLCC is economically justified **if and only if** the forward curve is in **Deep Contango** exceeding total carry costs:
-   $$\text{Contango Spread (M2 - M1)} > \text{Daily Demurrage/Charter Rate} + \text{Cost of Capital (SOFR + Spread)} + \text{Insurance/Boil-off}$$
-   - Under steep **Backwardation** ($-\$5.02\text{/bbl}$ M1-M2 spread)[cite: 9], time decay compounds with ship charter costs, strictly ruling out off-dock floating storage.
-
----
-## 4. Sensitivity Analysis & Modular Breakeven Conditions
-
-A physical arbitrage trade is structurally distinct from a theoretical paper spread. Evaluating delivered economics requires disaggregating deterministic transit costs from stochastic operational and credit frictions.
-
-### Modular CIF Landed Hurdle (30-Day Congestion Scenario)
-Under a 21-day sea transit and a severe 30-day discharge bottleneck (51 total transit/berth days), the physical delivered CIF cost structure escalates as follows:
-
-* Fixed Maritime Freight & Port Dues:
-  * Baseline Baltic TD3C Worldscale Freight: +$2.250 /bbl
-  * Destination Port Dues, Pilotage & Towage: +$0.180 /bbl
-* Operational Bottleneck & Demurrage Drag:
-  * Incurred Demurrage (27 billable days post-72h laytime @ $57,699/day): +$0.779 /bbl
-* Trade Finance, Carry & Physical Losses:
-  * Cost of Working Capital (5.5% APR on $116.72/bbl FOB over 51 days): +$0.897 /bbl
-  * Documentary Letter of Credit (DLC) Issuance & Usance (0.20% flat): +$0.233 /bbl
-  * Contractual Ocean Loss Allowance (0.20%) & Marine Cargo Insurance (0.03%): +$0.268 /bbl
-  * Independent Cargo Surveyor & Laboratory Assay (SGS/Saybolt): +$0.015 /bbl
+* Under a **30-day port queue** (27 billable demurrage days):
+  $$\text{Demurrage Drag} = 27\text{ days} \times \$0.02885\text{ /bbl/day} \approx +\$0.779\text{ /bbl}$$
 
 ---
 
-### Breakeven Arbitrage Hurdle
+## 3. Modular CIF Landed Cost & Sensitivity Analysis
 
-Destination refining netback must offer at least **+$4.62 /bbl** premium over FOB origin pricing (+$2.43 base logistics + $0.78 demurrage + $1.41 finance, loss & survey) to achieve economic breakeven under fully hedged Quotation Periods (QP).
+The model evaluates a hypothetical 30-day congestion scenario (21-day sea voyage + 30-day waiting queue = 51 total financing days) based on standardized desk rules of thumb:
 
-Unhedged Basis Risk Note: If prompt-month paper swaps (Brent/Dubai EFS) are not executed to lock the delivery pricing window, an additional +$4.52 /bbl term structure decay is inflicted by the severe backwardation curve, rendering unhedged physical arbitrage structurally underwater.
+* **Fixed Logistics & Port Charges**:
+  * Baseline Ocean Freight (Baltic TD3C baseline): `+$2.250 /bbl`
+  * Coastal Port Dues, Pilotage & Towage: `+$0.180 /bbl`
+* **Operational Demurrage Drag**:
+  * Contractual Demurrage (27 billable days @ $57,699/day): `+$0.779 /bbl`
+* **Financing, Loss & Cargo Administration**:
+  * Working Capital Cost (5.5% APR on $116.72/bbl FOB over 51 days): `+$0.897 /bbl`
+  * Documentary Letter of Credit (DLC) & Issuance (0.20% flat): `+$0.233 /bbl`
+  * Contractual Ocean Loss Allowance (0.20%) & Marine Insurance (0.03%): `+$0.268 /bbl`
+  * Independent Cargo Surveyor & Laboratory Assay (SGS/Saybolt): `+$0.015 /bbl`
+
+### Estimated Breakeven Parity Hurdle
+$$\text{Landed Hurdle}_{\text{Hedged}} \approx \$2.43\text{ (Freight/Port)} + \$0.78\text{ (Demurrage)} + \$1.41\text{ (Carry/Admin)} = \mathbf{+\$4.62\text{ /bbl}}$$
+
+Under these assumptions, the destination refining netback requires an estimated premium of at least **+$4.62 /bbl over FOB origin pricing** to achieve economic breakeven, assuming Quotation Periods (QP) are fully matched and hedged.
+
+---
+
+## 4. Physical Trading Realities & Model Boundaries
+
+1. **Quotation Periods (QP) & Calendar Roll Exposure**:
+   - Physical sales contracts are typically indexed to specific pricing windows (e.g., bill of lading date $+/-$ days or delivery month averages).
+   - If a cargo is priced on arrival and delayed into a deferred delivery month without executing timespread hedges (e.g., Brent Calendar Swaps), the position faces front-month backwardation roll exposure (M1-M2: -$5.02 /bbl)[cite: 9]. The actual economic impact depends on the specific QP contract clause and dynamic market movements over the holding period, rather than a deterministic linear decay.
+2. **Floating Storage Feasibility**:
+   - In steep backwardation, floating storage is generally economically unfavorable because deferred barrels trade at a steep discount to prompt barrels, while ship charter and financing costs continue to accumulate.
+   - However, floating storage decisions also depend on asset opportunity costs, optionality in sales contracts, blending economics, and port access constraints.
+3. **Basis & Quality Differentials**:
+   - Arbitrage viability also incorporates Official Selling Price (OSP) differentials set by National Oil Companies (Aramco, ADNOC) against Oman/Dubai, as well as API gravity and sulfur yield adjustments at destination refineries.
 
 ---
 
@@ -94,21 +79,7 @@ Unhedged Basis Risk Note: If prompt-month paper swaps (Brent/Dubai EFS) are not 
 
 ```text
 crude-arbitrage-demurrage-monitor/
-├── README.md        # Desk analytics methodology & limitations
+├── README.md        # Research documentation & model parameters
 ├── requirements.txt # Pinned environment dependencies
-├── crude.py         # Analytics engine, unit tests & visualizer
-└── Crude.png        # High-resolution 3-panel monitor dashboard
-```
-Installation & Execution
-```
-```bash
-# 1. Clone the repository
-git clone [https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git](https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
-cd crude-arbitrage-demurrage-monitor
-
-# 2. Install dependencies
-pip install -r requirements.txt
-
-# 3. Run the engine and regenerate the monitor dashboard
-python crude.py
-```
+├── crude.py         # Simulation engine & 3-panel monitor renderer
+└── Crude.png        # Generated 3-panel dashboard
