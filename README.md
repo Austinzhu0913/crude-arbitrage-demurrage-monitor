@@ -70,7 +70,7 @@ A 30-day discharge delay introduces substantial balance-sheet drag:
 * **Financing Carry (at 5.5% APR over 51 total transit/berth days)**: $+\$0.897\text{ /bbl}$
 * **In-Transit Ocean Loss Allowance (0.2%)**: $+\$0.233\text{ /bbl}$
 
-**Breakeven Arbitrage Hurdle**: Destination refining netback must offer at least **+\$4.41 /bbl premium over FOB origin pricing** ($+\$2.50\text{ base freight} + \$1.91\text{ delay \& carry friction}$) to prevent structural margin erosion under prolonged congestion.
+**Breakeven Arbitrage Hurdle**: Destination refining netback must offer at least **+\$4.41 /bbl premium over FOB origin pricing** ($+\$2.50\text{ base freight} + \$1.91\text{ delay and carry friction}$) to prevent structural margin erosion under prolonged congestion.
 
 ---
 
@@ -85,6 +85,7 @@ crude-arbitrage-demurrage-monitor/
 ```
 Installation & Execution
 ```
+```bash
 # 1. Clone the repository
 git clone [https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git](https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
 cd crude-arbitrage-demurrage-monitor
