@@ -93,7 +93,7 @@ crude-arbitrage-demurrage-monitor/
 Installation & Execution
 ```bash
 # 1. Clone the repository
-git clone [https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git](https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
+git clone https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git(https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
 cd crude-arbitrage-demurrage-monitor
 
 # 2. Install dependencies
