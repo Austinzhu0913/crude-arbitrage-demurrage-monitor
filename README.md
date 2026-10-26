@@ -90,7 +90,7 @@ crude-arbitrage-demurrage-monitor/
 ├── crude.py         # Simulation engine, unit tests & visualizer
 └── Crude.png        # Generated 3-panel dashboard
 ```
-## Installation & Execution
+### Installation & Execution
 ```bash
 # 1. Clone the repository
 git clone [https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git](https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
