@@ -69,24 +69,24 @@ A physical arbitrage trade is structurally distinct from a theoretical paper spr
 ### Modular CIF Landed Hurdle (30-Day Congestion Scenario)
 Under a 21-day sea transit and a severe 30-day discharge bottleneck (51 total transit/berth days), the physical delivered CIF cost structure escalates as follows:
 
-* **Fixed Maritime Freight & Port Dues**: 
-  * Baseline Baltic TD3C Worldscale Freight: `+$2.250 /bbl`
-  * Destination Port Dues, Pilotage & Towage: `+$0.180 /bbl`
-* **Operational Bottleneck & Demurrage Drag**: 
-  * Incurred Demurrage (27 billable days post-72h laytime @ $57,699/day): `+$0.779 /bbl`
-* **Trade Finance, Carry & Physical Losses**:
-  * Cost of Working Capital (5.5% APR on $116.72/bbl FOB over 51 days): `+$0.897 /bbl`
-  * Documentary Letter of Credit (DLC) Issuance & Usance (0.20% flat): `+$0.233 /bbl`
-  * Contractual Ocean Loss Allowance (0.20%) & Marine Cargo Insurance (0.03%): `+$0.268 /bbl`
-  * Independent Cargo Surveyor & Laboratory Assay (SGS/Saybolt): `+$0.015 /bbl`
+* Fixed Maritime Freight & Port Dues:
+  * Baseline Baltic TD3C Worldscale Freight: +$2.250 /bbl
+  * Destination Port Dues, Pilotage & Towage: +$0.180 /bbl
+* Operational Bottleneck & Demurrage Drag:
+  * Incurred Demurrage (27 billable days post-72h laytime @ $57,699/day): +$0.779 /bbl
+* Trade Finance, Carry & Physical Losses:
+  * Cost of Working Capital (5.5% APR on $116.72/bbl FOB over 51 days): +$0.897 /bbl
+  * Documentary Letter of Credit (DLC) Issuance & Usance (0.20% flat): +$0.233 /bbl
+  * Contractual Ocean Loss Allowance (0.20%) & Marine Cargo Insurance (0.03%): +$0.268 /bbl
+  * Independent Cargo Surveyor & Laboratory Assay (SGS/Saybolt): +$0.015 /bbl
 
 ---
 
 ### Breakeven Arbitrage Hurdle
-$$\text{Landed Hurdle}_{\text{Hedged}} = \$2.43\text{ (Base Logistics)} + \$0.78\text{ (Demurrage)} + \$1.41\text{ (Finance, Loss \& Survey)} = \mathbf{+\$4.62\text{ /bbl}}$$
 
-* **Deterministic Physical Hurdle**: Destination refining netback must offer at least a **+$4.62 /bbl premium over FOB origin pricing** to achieve economic breakeven under fully hedged Quotation Periods (QP).
-* **Unhedged Basis Risk Note**: If prompt-month paper swaps (Brent/Dubai EFS) are not executed to lock the delivery pricing window, an additional **+$4.52 /bbl** term structure decay is inflicted by the severe backwardation curve, rendering unhedged physical arbitrage structurally underwater.
+Destination refining netback must offer at least **+$4.62 /bbl** premium over FOB origin pricing (+$2.43 base logistics + $0.78 demurrage + $1.41 finance, loss & survey) to achieve economic breakeven under fully hedged Quotation Periods (QP).
+
+*Unhedged Basis Risk Note*: If prompt-month paper swaps (Brent/Dubai EFS) are not executed to lock the delivery pricing window, an additional +$4.52 /bbl term structure decay is inflicted by the severe backwardation curve, rendering unhedged physical arbitrage structurally underwater.
 ---
 
 ## 5. Project Structure & Quickstart
