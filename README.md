@@ -70,7 +70,7 @@ A 30-day discharge delay introduces substantial balance-sheet drag:
 * **Financing Carry (at 5.5% APR over 51 total transit/berth days)**: +$0.897 /bbl
 * **In-Transit Ocean Loss Allowance (0.2%)**: +$0.233 /bbl
 
-*Breakeven Arbitrage Hurdle**: Destination refining netback must offer at least **+$4.41 /bbl premium over FOB origin pricing** (+$2.50 base freight + $1.91 delay and carry friction) to prevent structural margin erosion under prolonged congestion.
+Breakeven Arbitrage Hurdle**: Destination refining netback must offer at least **+$4.41 /bbl premium over FOB origin pricing** (+$2.50 base freight + $1.91 delay and carry friction) to prevent structural margin erosion under prolonged congestion.
 ---
 
 ## 5. Project Structure & Quickstart
