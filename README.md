@@ -91,7 +91,7 @@ crude-arbitrage-demurrage-monitor/
 └── Crude.png        # Generated 3-panel dashboard
 ```
 Installation & Execution
-```Bash
+```bash
 # 1. Clone the repository
 git clone [https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git](https://github.com/Austinzhu0913/crude-arbitrage-demurrage-monitor.git)
 cd crude-arbitrage-demurrage-monitor
@@ -101,3 +101,4 @@ pip install -r requirements.txt
 
 # 3. Run the engine and regenerate the monitor dashboard
 python crude.py
+```
